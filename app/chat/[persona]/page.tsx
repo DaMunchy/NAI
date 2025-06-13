@@ -68,7 +68,7 @@ export default function ChatPage() {
           <h1 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg tracking-wide md:text-4xl">
             {currentPersona?.name}
           </h1>
-          <div className="w-1 text-right">
+          <div className="w-5 text-right">
           </div>
         </div>
       </header>
@@ -109,7 +109,7 @@ export default function ChatPage() {
         </div>
       </main>
 
-      <div className="sticky bottom-0 z-20 w-full bg-black/90 backdrop-blur-lg px-3 pt-2 pb-5 shadow-inner border-t border-purple-800/50">
+      <div className="sticky bottom-0 z-20 w-full bg-black/90 backdrop-blur-lg px-3 pt-2 pb-10 shadow-inner border-t border-purple-800/50">
 
 
         <div className="max-w-4xl mx-auto flex items-center gap-4">
