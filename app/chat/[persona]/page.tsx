@@ -110,7 +110,8 @@ export default function ChatPage() {
         </div>
       </main>
 
-      <div className="sticky bottom-1 z-20 w-full bg-black/90 backdrop-blur-lg px-3 pt-2 pb-3 shadow-inner border-t border-purple-800/50">
+      <div className="sticky bottom-0 z-20 w-full bg-black/90 backdrop-blur-lg px-3 pt-2 pb-[env(safe-area-inset-bottom,1.5rem)] shadow-inner border-t border-purple-800/50">
+
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <input
             value={input}
