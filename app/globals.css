@@ -290,3 +290,8 @@ body {
   vertical-align: top; /* Ensures it starts from top */
   line-height: normal; /* Prevents stretching */
 }
+
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+}
