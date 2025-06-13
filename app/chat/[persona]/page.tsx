@@ -1,4 +1,3 @@
-// File: app/chat/[persona]/page.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -20,24 +19,20 @@ export default function ChatPage() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
     const userMessage = { role: "user", content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setIsLoadingReply(true);
-
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ persona: currentPersona, messages: [...messages, userMessage] })
       });
-
       const data = await res.json();
       const aiMessage = { role: "assistant", content: data.reply };
       setMessages(prev => [...prev, aiMessage]);
-    } catch (error) {
-      console.error("Failed to fetch AI reply:", error);
+    } catch {
       setMessages(prev => [...prev, { role: "assistant", content: "Oops! Sepertinya ada masalah koneksi. Coba lagi nanti." }]);
     } finally {
       setIsLoadingReply(false);
@@ -49,51 +44,41 @@ export default function ChatPage() {
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
-
     const formatted = escaped.replace(/\*(.*?)\*/g, '<span class="italic text-gray-400">$1</span>');
     return formatted;
   }
 
   return (
-    <div className="h-screen flex flex-col justify-between">
+    <div className="h-screen flex flex-col overflow-hidden bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white font-inter antialiased relative">
       <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none z-0"></div>
 
-      <header className="sticky top-0 z-20 w-full bg-black/80 backdrop-blur-lg p-4 shadow-2xl border-b border-purple-800/50">
+      <header className="z-20 w-full bg-black/80 backdrop-blur-lg p-4 shadow-2xl border-b border-purple-800/50">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:-translate-x-1">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <Link href="/" className="text-xl font-bold text-gray-400 hover:text-purple-400 transition duration-300 transform hover:-translate-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
             </svg>
           </Link>
-          <h1 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg tracking-wide md:text-4xl">
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg tracking-wide">
             {currentPersona?.name}
           </h1>
-          <div className="w-5 text-right">
-          </div>
+          <div className="w-5" />
         </div>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4 md:p-5 space-y-4 scrollbar-none">
-
-
         <div className="max-w-4xl mx-auto space-y-5 pb-4">
           {messages.slice(1).map((msg, idx) => (
-            <div
-              key={idx}
-              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-            >
+            <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div
-                className={`p-4 rounded-3xl shadow-xl transition-all duration-300 ease-in-out transform break-words ${
+                className={`p-4 rounded-3xl shadow-xl transition duration-300 transform break-words ${
                   msg.role === "user"
                     ? "bg-gradient-to-br from-purple-700 to-pink-600 text-white rounded-br-none"
                     : "bg-gray-800/90 text-gray-100 rounded-bl-none border border-gray-700"
                 }`}
                 style={{ maxWidth: "75%", whiteSpace: "pre-wrap" }}
               >
-                <p
-                  className="leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
-                />
+                <p className="leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
               </div>
             </div>
           ))}
@@ -112,13 +97,12 @@ export default function ChatPage() {
       </main>
 
       <div className="w-full bg-black/90 px-4 pt-2 pb-5 border-t border-purple-800/50">
-
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && sendMessage()}
-            className="flex-1 py-3 px-4 rounded-full bg-gray-800/80 text-white placeholder-gray-400 border border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition-all duration-300 text-base shadow-inner"
+            className="flex-1 py-3 px-4 rounded-full bg-gray-800/80 text-white placeholder-gray-400 border border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition duration-300 text-base shadow-inner"
             placeholder={`Ketik pesan ke ${currentPersona?.name}...`}
             disabled={isLoadingReply}
           />
