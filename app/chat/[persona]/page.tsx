@@ -64,7 +64,6 @@ export default function ChatPage() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
             </svg>
-            Kembali
           </Link>
           <h1 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg tracking-wide md:text-4xl">
             {currentPersona?.name}
@@ -75,7 +74,7 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-scroll p-5 md:p-6 pb-20 invisible-scrollbar z-10">
+      <main className="flex-1 overflow-y-scroll p-4 md:p-5 pb-24 invisible-scrollbar z-10">
         <div className="max-w-4xl mx-auto space-y-5 pb-4">
           {messages.slice(1).map((msg, idx) => (
             <div
@@ -111,13 +110,13 @@ export default function ChatPage() {
         </div>
       </main>
 
-      <div className="sticky bottom-12 z-20 w-full bg-black/90 backdrop-blur-lg px-4 py-3 shadow-3xl border-t border-purple-800/50">
+      <div className="sticky bottom-1 z-20 w-full bg-black/90 backdrop-blur-lg px-3 pt-2 pb-3 shadow-inner border-t border-purple-800/50">
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && sendMessage()}
-            className="flex-1 py-4 px-4 rounded-full bg-gray-800/80 text-white placeholder-gray-400 border border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition-all duration-300 text-base shadow-inner"
+            className="flex-1 py-3 px-4 rounded-full bg-gray-800/80 text-white placeholder-gray-400 border border-gray-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition-all duration-300 text-base shadow-inner"
             placeholder={`Ketik pesan ke ${currentPersona?.name}...`}
             disabled={isLoadingReply}
           />
