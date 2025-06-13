@@ -73,7 +73,9 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-scroll p-4 md:p-5 pb-24 invisible-scrollbar z-10">
+      <main className="flex-1 overflow-y-auto p-4 md:p-5 space-y-4 scrollbar-none">
+
+
         <div className="max-w-4xl mx-auto space-y-5 pb-4">
           {messages.slice(1).map((msg, idx) => (
             <div
@@ -109,8 +111,7 @@ export default function ChatPage() {
         </div>
       </main>
 
-      <div className="sticky bottom-0 z-20 w-full bg-black/90 backdrop-blur-lg px-3 pt-2 pb-10 shadow-inner border-t border-purple-800/50">
-
+      <div className="w-full bg-black/90 px-4 pt-2 pb-5 border-t border-purple-800/50">
 
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <input
