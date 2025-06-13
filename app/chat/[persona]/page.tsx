@@ -55,7 +55,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white flex flex-col font-inter antialiased relative overflow-hidden">
+    <div className="h-screen flex flex-col justify-between">
       <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none z-0"></div>
 
       <header className="sticky top-0 z-20 w-full bg-black/80 backdrop-blur-lg p-4 shadow-2xl border-b border-purple-800/50">
