@@ -1,0 +1,135 @@
+// File: app/chat/[persona]/page.tsx
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import { personas } from "@/lib/personas";
+
+export default function ChatPage() {
+  const { persona } = useParams();
+  const currentPersona = personas.find(p => p.id === persona);
+  const [messages, setMessages] = useState([{ role: "system", content: currentPersona?.prompt ?? "" }]);
+  const [input, setInput] = useState("");
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const [isLoadingReply, setIsLoadingReply] = useState(false);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    const userMessage = { role: "user", content: input };
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsLoadingReply(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ persona: currentPersona, messages: [...messages, userMessage] })
+      });
+
+      const data = await res.json();
+      const aiMessage = { role: "assistant", content: data.reply };
+      setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error("Failed to fetch AI reply:", error);
+      setMessages(prev => [...prev, { role: "assistant", content: "Oops! Sepertinya ada masalah koneksi. Coba lagi nanti." }]);
+    } finally {
+      setIsLoadingReply(false);
+    }
+  };
+  function formatMessage(content: string) {
+  const escaped = content
+    .replace(/&/g, "&amp;") 
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const formatted = escaped.replace(/\*(.*?)\*/g, '<span class="italic text-gray-400">$1</span>');
+
+  return formatted;
+}
+
+
+
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white flex flex-col font-inter antialiased relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none z-0"></div>
+
+      <header className="sticky top-0 z-20 w-full bg-black/80 backdrop-blur-lg p-4 shadow-2xl border-b border-purple-800/50">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <Link href="/" className="text-xl font-bold text-gray-400 hover:text-purple-400 transition-colors duration-300 transform hover:-translate-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+            </svg>
+            Kembali
+          </Link>
+          <h1 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg tracking-wide md:text-4xl">
+            {currentPersona?.name} AI
+          </h1>
+          <div className="w-24 text-right">
+             <span className="text-sm text-gray-500 hidden md:inline">Online</span>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 overflow-y-scroll p-4 md:p-6 pb-40 invisible-scrollbar z-10"> {/* Adjusted pb-xx here */}
+        <div className="max-w-4xl mx-auto space-y-5 pb-4">
+          {messages.slice(1).map((msg, idx) => (
+            <div
+              key={idx}
+              className={`p-4 rounded-3xl shadow-xl transition-all duration-300 ease-in-out transform ${
+                msg.role === "user"
+                  ? "ml-auto bg-gradient-to-br from-purple-700 to-pink-600 text-white rounded-br-none animate-slide-in-right-smooth"
+                  : "mr-auto bg-gray-800/90 text-gray-100 rounded-bl-none border border-gray-700 animate-slide-in-left-smooth"
+              } max-w-[85%] md:max-w-[70%]`}
+            >
+              <p
+  className="whitespace-pre-wrap leading-relaxed"
+  dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }}
+/>
+
+            </div>
+          ))}
+          {isLoadingReply && (
+            <div className="mr-auto bg-gray-800/90 text-gray-100 p-4 rounded-3xl rounded-bl-none shadow-xl max-w-[85%] md:max-w-[70%] animate-pulse border border-gray-700 flex items-center justify-center">
+              <svg className="animate-spin h-6 w-6 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+          )}
+          <div ref={chatEndRef} className="scroll-mt-40" /> 
+        </div>
+      </main>
+
+      <div className="sticky bottom-0 z-20 w-full bg-black/90 backdrop-blur-lg px-6 pt-6 pb-12 shadow-3xl border-t border-purple-800/50"> {/* Adjusted padding here */}
+        <div className="max-w-4xl mx-auto flex gap-3 items-center">
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && sendMessage()}
+            className="flex-1 py-4 px-5 rounded-full bg-gray-800/80 text-white placeholder-gray-400 border border-gray-700 focus:border-purple-500 focus:ring-3 focus:ring-purple-500/50 outline-none transition-all duration-300 text-lg shadow-inner custom-placeholder-padding"
+            placeholder={`Ketik pesan ke ${currentPersona?.name}...`}
+            disabled={isLoadingReply}
+          />
+          <button
+            onClick={sendMessage}
+            className="bg-gradient-to-br from-purple-600 to-pink-600 text-white px-7 py-3 rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-xl hover:shadow-purple-500/60 focus:outline-none focus:ring-3 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black disabled:opacity-50 disabled:cursor-not-allowed text-lg font-semibold flex items-center justify-center space-x-2 transform hover:scale-105"
+            disabled={isLoadingReply || !input.trim()}
+          >
+            Kirim
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transform -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

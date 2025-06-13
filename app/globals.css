@@ -24,3 +24,269 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.animate-text-gradient {
+  background: linear-gradient(90deg, #4f46e5, #d8b4fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 5s infinite alternate;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.7s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-in-bottom {
+    animation: slide-in-bottom 0.5s ease-out forwards;
+}
+
+@keyframes slide-in-bottom {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite cubic-bezier(0.6, 0.01, 0.6, 1);
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes pulse-light {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.01);
+  }
+}
+
+.animate-pulse-light {
+  animation: pulse-light 2.5s infinite ease-in-out;
+}
+
+@keyframes text-gradient-pulse {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-text-gradient-pulse {
+  background: linear-gradient(90deg, #a78bfa, #f472b6, #60a5fa); /* Adjusted colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-gradient-pulse 4s infinite alternate;
+  background-size: 200% auto; /* For wider gradient sweep */
+}
+
+
+/* Existing animations from previous responses */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.7s ease-in-out forwards;
+}
+
+@keyframes slide-in-bottom {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-in-bottom {
+    animation: slide-in-bottom 0.5s ease-out forwards;
+}
+
+/* Custom radial gradient for ripple effect */
+.bg-radial-gradient {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Custom Scrollbar Styling (Invisible) */
+/* For Webkit browsers (Chrome, Safari, Edge) */
+.invisible-scrollbar::-webkit-scrollbar {
+  width: 0px; /* Hide scrollbar width */
+  background: transparent; /* Make scrollbar track transparent */
+}
+
+/* For Firefox */
+.invisible-scrollbar {
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Placeholder Top Alignment */
+.placeholder-top-align::placeholder {
+  vertical-align: top;
+  line-height: normal; /* Ensure default line-height */
+  padding-top: 2px; /* Adjust as needed for slight lift */
+}
+
+/* Add or ensure these existing animations are present */
+/* Background Grid Pattern */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px; /* Adjust grid size here */
+}
+
+/* Smooth Slide-in Animations for chat bubbles */
+@keyframes slide-in-right-smooth {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right-smooth {
+  animation: slide-in-right-smooth 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slide-in-left-smooth {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left-smooth {
+  animation: slide-in-left-smooth 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Typing Indicator (Dot Flashing) */
+@keyframes dot-flashing {
+  0% {
+    background-color: #9b59b6;
+  }
+  50%, 100% {
+    background-color: #ffffff;
+  }
+}
+
+.dot-flashing {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9b59b6;
+  color: #9b59b6;
+  display: inline-block;
+  margin: 0 2px;
+  animation: dot-flashing 1s infinite alternate;
+}
+
+.dot-flashing::before, .dot-flashing::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9b59b6;
+  color: #9b59b6;
+}
+
+.dot-flashing::before {
+  left: -15px;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dot-flashing::after {
+  left: 15px;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0.5s;
+}
+
+.dot-flashing-2 {
+  animation-delay: 0.25s;
+}
+
+.dot-flashing-3 {
+  animation-delay: 0.5s;
+}
+
+.custom-placeholder-padding::placeholder {
+  /* Adjust based on input's total vertical padding */
+  /* If input has py-4 (total 2rem/32px height), and text is 1rem/16px, center is 8px top/bottom. */
+  /* To push up, reduce padding-top */
+  padding-top: 0.25rem; /* Equivalent to py-1 on placeholder, adjust as needed */
+  /* Or you can use specific px values */
+  /* padding-top: 4px; */
+  vertical-align: top; /* Ensures it starts from top */
+  line-height: normal; /* Prevents stretching */
+}
