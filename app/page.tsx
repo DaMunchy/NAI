@@ -48,18 +48,6 @@ export default function HomePage() {
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </Link>
             </li>
-            <li>
-              <Link href="#" className="text-lg text-gray-300 hover:text-pink-400 relative group transition-colors duration-300">
-                Contact
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-pink-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="text-lg text-gray-300 hover:text-blue-400 relative group transition-colors duration-300">
-                FAQ
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-              </Link>
-            </li>
           </ul>
         </nav>
       </header>

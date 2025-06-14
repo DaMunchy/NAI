@@ -12,10 +12,9 @@ export default function AboutPage() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
             </svg>
-            Kembali
           </a>
           <h1 className="text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-lg tracking-wide md:text-4xl">
-            Tentang NAI
+                Tentang NAI
           </h1>
           <div className="w-24"></div>
         </div>
@@ -34,6 +33,9 @@ export default function AboutPage() {
           </p>
           <p className="text-center text-sm text-gray-400 pt-4">
             Terima kasih telah menjadi bagian dari perjalanan kami!
+          </p>
+          <p className="text-center text-sm text-gray-400 pt4">
+            Email: munchynes@gmail.com
           </p>
         </div>
       </main>
